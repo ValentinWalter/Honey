@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Middleman",
+        "repositoryURL": "https://github.com/ValentinWalter/Middleman",
+        "state": {
+          "branch": "pre-release",
+          "revision": "cde99c8ab0ac4e4b2ecdc33bf4b51b2c3790e798",
+          "version": null
+        }
+      },
+      {
+        "package": "StringCase",
+        "repositoryURL": "https://github.com/ValentinWalter/StringCase",
+        "state": {
+          "branch": "master",
+          "revision": "25be31eb5dd9b501b9cbe9e64ffc4a11f89ccc5b",
+          "version": null
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "3d79b2b5a2e5af52c14e462044702ea7728f5770",
+          "version": "0.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
