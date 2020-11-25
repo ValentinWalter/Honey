@@ -51,7 +51,7 @@ public extension Bear {
             public var title: String?
             public var text: String?
             public var tags: [String]? = nil
-            public var file: String? = nil
+            public var file: Data? = nil
             public var filename: String? = nil
             public var openNote: Bool? = nil
             public var newWindow: Bool? = nil

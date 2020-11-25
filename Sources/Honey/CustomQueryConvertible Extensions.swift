@@ -29,3 +29,9 @@ extension Array: CustomQueryConvertible where Element: CustomStringConvertible {
         }
     }
 }
+
+extension Data: CustomQueryConvertible {
+    public var queryValue: String? {
+        base64EncodedString()
+    }
+}

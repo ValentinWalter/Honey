@@ -53,7 +53,7 @@ extension Bear {
                 title: note.title,
                 text: note.body,
                 tags: tags,
-                file: file?.data.base64EncodedString(),
+                file: file?.data,
                 filename: file?.name,
                 openNote: options.contains(.openNote),
                 newWindow: options.contains(.newWindow),
