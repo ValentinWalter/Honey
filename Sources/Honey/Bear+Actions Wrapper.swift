@@ -194,6 +194,47 @@ extension Bear {
             }
         )
     }
+    
+    
+    //MARK:- Add File
+
+    public static func addFile(
+        note lookup: Note.Lookup,
+        file: File,
+        header: String? = nil,
+        mode: AddMode,
+        options: Options = [],
+        onError handleError: @escaping ErrorHandler = { },
+        onSuccess handleSuccess: @escaping SuccessHandler<AddFile> = { _ in }
+    ) {
+        Bear().run(
+            action: AddFile(),
+            with: AddFile.Input(
+                id: lookup.id,
+                title: lookup.title,
+                file: file.data,
+                header: header,
+                filename: file.name,
+                mode: mode,
+                openNote: options.contains(.openNote),
+                newWindow: options.contains(.newWindow),
+                showWindow: options.contains(.showWindow),
+                edit: options.contains(.edit)
+            ),
+            then: { response in
+                switch response {
+                case .success(let output):
+                    guard let output = output else {
+                        handleError()
+                        return
+                    }
+                    handleSuccess(output)
+                case .error(_, _): handleError()
+                case .cancel: handleError()
+                }
+            }
+        )
+    }
 
 
     //MARK:- Modify
