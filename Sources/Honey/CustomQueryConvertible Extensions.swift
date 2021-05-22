@@ -4,10 +4,6 @@
 //
 //  Created by Valentin Walter on 4/21/20.
 //  
-//
-//  Abstract:
-//
-//
 
 import Foundation
 import Middleman

@@ -4,15 +4,11 @@
 //
 //  Created by Valentin Walter on 4/22/20.
 //  
-//
-//  Abstract:
-//
-//
 
 import Foundation
 
 public extension Bear {
-
+	/// A note as found in *Bear*.
     struct Note: Codable {
         public var title: String
         public var body: String?
@@ -45,18 +41,16 @@ public extension Bear {
         }
 
         /// `title` and `body` combined.
-        public var markdown: String { body ?? title }
+        public var markdown: String { body ?? "# " + title }
 
         /// Publishes the current state to Bear.
         /// - Parameter open: Whether or not to open the note in the Bear.
         func publish(open: Bool = false) {
-            // Backup
-            print(markdown)
             Bear.addText(
                 note: .title(title),
                 text: markdown,
                 mode: .replaceAll,
-                options: open ? .openNote : []
+                options: open ? [] : .hideNote
             )
         }
 
@@ -69,27 +63,29 @@ public extension Bear {
             case isPinned = "pin"
             case isTrashed
         }
-
-        public enum Lookup {
-            case title(String)
-            case id(String)
-
-            var title: String? {
-                if case let .title(title) = self {
-                    return title
-                } else {
-                    return nil
-                }
-            }
-
-            var id: String? {
-                if case let .id(id) = self {
-                    return id
-                } else {
-                    return nil
-                }
-            }
-        }
     }
-    
+}
+
+extension Bear.Note {
+	/// Look up notes by either a `title` or an `id`.
+	public enum Lookup {
+		case title(String)
+		case id(String)
+		
+		var title: String? {
+			if case let .title(title) = self {
+				return title
+			} else {
+				return nil
+			}
+		}
+		
+		var id: String? {
+			if case let .id(id) = self {
+				return id
+			} else {
+				return nil
+			}
+		}
+	}
 }

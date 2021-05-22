@@ -3,10 +3,8 @@
 //  Honey
 //
 //  Created by Valentin Walter on 4/15/20.
-//  
 //
-//  Abstract:
-//  Implementation of all actions found on
+//  Backend implementation of all actions found on
 //  https://bear.app/faq/X-callback-url%20Scheme%20documentation/
 //
 

@@ -1,11 +1,11 @@
 //
 //  Bear.swift
+//  Honey
 //  
 //  Created by Valentin Walter on 4/13/20.
 //
-///  # Abstract
-///  Namespace for actions such as `Bear.create`.
-///  Actions are declared in `Bear+Actions.swift`.
+//  Namespace for actions such as `Bear.create`.
+//  Actions are declared in `Bear+Actions.swift`.
 //
 
 import Foundation

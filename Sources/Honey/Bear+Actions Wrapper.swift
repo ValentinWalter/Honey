@@ -4,9 +4,7 @@
 //
 //  Created by Valentin Walter on 4/15/20.
 //  
-//
-//  Abstract:
-//
+//  Frontend declarations of all `Bear.Actions`.
 //
 
 import Foundation
@@ -16,7 +14,7 @@ extension Bear {
     public typealias Handler<T> = (T) -> Void
     public typealias SuccessHandler<A> = Handler<A.Output> where A: Action
     public typealias ErrorHandler = () -> Void
-
+	
     public struct Options: OptionSet {
         public var rawValue: Int
 
@@ -24,14 +22,14 @@ extension Bear {
             self.rawValue = rawValue
         }
 
-        public static let openNote       = Options(rawValue: 1 << 0)
+        public static let hideNote       = Options(rawValue: 1 << 0)
         public static let newWindow      = Options(rawValue: 1 << 1)
         public static let float          = Options(rawValue: 1 << 2)
-        public static let showWindow     = Options(rawValue: 1 << 3)
+        public static let hideWindow     = Options(rawValue: 1 << 3)
         public static let excludeTrashed = Options(rawValue: 1 << 4)
         public static let pin            = Options(rawValue: 1 << 5)
         public static let edit           = Options(rawValue: 1 << 6)
-        public static let timestamp      = Options(rawValue: 1 << 7)
+		public static let timestamp      = Options(rawValue: 1 << 7)
     }
 }
 
@@ -43,9 +41,9 @@ extension Bear {
         note: Note,
         tags: [String] = [],
         file: File? = nil,
-        options: Options = [.showWindow, .openNote],
-        onError handleError: @escaping ErrorHandler = { },
-        onSuccess handleSuccess: @escaping SuccessHandler<Create> = { _ in }
+        options: Options = [],
+		onSuccess handleSuccess: @escaping SuccessHandler<Create> = { _ in },
+		onError handleError: @escaping ErrorHandler = { }
     ) {
         Bear().run(
             action: Create(),
@@ -55,9 +53,9 @@ extension Bear {
                 tags: tags,
                 file: file?.data,
                 filename: file?.name,
-                openNote: options.contains(.openNote),
+                openNote: !options.contains(.hideNote),
                 newWindow: options.contains(.newWindow),
-                showWindow: options.contains(.showWindow),
+                showWindow: !options.contains(.hideWindow),
                 pin: options.contains(.pin),
                 edit: options.contains(.edit),
                 timestamp: options.contains(.timestamp)
@@ -76,6 +74,23 @@ extension Bear {
             }
         )
     }
+	
+	public static func create(
+		note: Note,
+		tags: [String] = [],
+		file: File? = nil,
+		options: Options = [],
+		onSuccess handleSuccess: @escaping SuccessHandler<Create>
+	) {
+		Bear.create(
+			note: note,
+			tags: tags,
+			file: file,
+			options: options,
+			onSuccess: handleSuccess,
+			onError: { }
+		)
+	}
 
 
     //MARK:- Open
@@ -83,9 +98,9 @@ extension Bear {
     public static func open(
         note: Note.Lookup,
         at header: String? = nil,
-        options: Options = [.showWindow],
-        onError handleError: @escaping ErrorHandler = { },
-        onSuccess handleSuccess: @escaping SuccessHandler<OpenNote> = { _ in }
+        options: Options = [],
+		onSuccess handleSuccess: @escaping SuccessHandler<OpenNote> = { _ in },
+        onError handleError: @escaping ErrorHandler = { }
     ) {
         Bear().run(
             action: OpenNote(),
@@ -97,7 +112,7 @@ extension Bear {
                 newWindow: options.contains(.newWindow),
                 openNote: true,
                 float: options.contains(.float),
-                showWindow: options.contains(.showWindow),
+                showWindow: !options.contains(.hideWindow),
                 pin: options.contains(.pin),
                 edit: options.contains(.edit)
             ),
@@ -116,6 +131,21 @@ extension Bear {
         )
     }
 
+	public static func open(
+		note: Note.Lookup,
+		at header: String? = nil,
+		options: Options = [],
+		onSuccess handleSuccess: @escaping SuccessHandler<OpenNote>
+	) {
+		Bear.open(
+			note: note,
+			at: header,
+			options: options,
+			onSuccess: handleSuccess,
+			onError: { }
+		)
+	}
+	
 
     //MARK:- Read
 
@@ -156,12 +186,12 @@ extension Bear {
     public static func addText(
         note lookup: Note.Lookup,
         text: String,
-        header: String? = nil,
+		at header: String? = nil,
         mode: AddMode,
         tags: [String] = [],
-        options: Options = [],
-        onError handleError: @escaping ErrorHandler = { },
-        onSuccess handleSuccess: @escaping SuccessHandler<AddText> = { _ in }
+		options: Options = [.hideNote, .hideWindow],
+		onSuccess handleSuccess: @escaping SuccessHandler<AddText> = { _ in },
+        onError handleError: @escaping ErrorHandler = { }
     ) {
         Bear().run(
             action: AddText(),
@@ -174,9 +204,9 @@ extension Bear {
                 newLine: false,
                 tags: tags,
                 excludeTrashed: options.contains(.excludeTrashed),
-                openNote: options.contains(.openNote),
+                openNote: !options.contains(.hideNote),
                 newWindow: options.contains(.newWindow),
-                showWindow: options.contains(.showWindow),
+                showWindow: !options.contains(.hideWindow),
                 edit: options.contains(.edit),
                 timestamp: options.contains(.timestamp)
             ),
@@ -194,6 +224,27 @@ extension Bear {
             }
         )
     }
+	
+	public static func addText(
+		note lookup: Note.Lookup,
+		text: String,
+		at header: String? = nil,
+		mode: AddMode,
+		tags: [String] = [],
+		options: Options = [.hideNote, .hideWindow],
+		onSuccess handleSuccess: @escaping SuccessHandler<AddText>
+	) {
+		Bear.addText(
+			note: lookup,
+			text: text,
+			at: header,
+			mode: mode,
+			tags: tags,
+			options: options,
+			onSuccess: handleSuccess,
+			onError: { }
+		)
+	}
     
     
     //MARK:- Add File
@@ -201,11 +252,11 @@ extension Bear {
     public static func addFile(
         note lookup: Note.Lookup,
         file: File,
-        header: String? = nil,
+        at header: String? = nil,
         mode: AddMode,
-        options: Options = [],
-        onError handleError: @escaping ErrorHandler = { },
-        onSuccess handleSuccess: @escaping SuccessHandler<AddFile> = { _ in }
+		options: Options = [.hideNote, .hideWindow],
+		onSuccess handleSuccess: @escaping SuccessHandler<AddFile> = { _ in },
+        onError handleError: @escaping ErrorHandler = { }
     ) {
         Bear().run(
             action: AddFile(),
@@ -216,9 +267,9 @@ extension Bear {
                 header: header,
                 filename: file.name,
                 mode: mode,
-                openNote: options.contains(.openNote),
+                openNote: !options.contains(.hideNote),
                 newWindow: options.contains(.newWindow),
-                showWindow: options.contains(.showWindow),
+                showWindow: !options.contains(.hideWindow),
                 edit: options.contains(.edit)
             ),
             then: { response in
@@ -235,34 +286,24 @@ extension Bear {
             }
         )
     }
-
-
-    //MARK:- Modify
-
-//    public static func modify<T: NoteConvertible>(
-//        note lookup: Note.Lookup,
-//        with modify: @escaping (T) -> T,
-//        options: Options = []
-//    ) {
-//        Bear.read(
-//            note: lookup,
-//            then: { note in
-//                // Backup
-//                print(note.markdown)
-//
-//                let note = modify(T(markdown: note.markdown))
-//                Bear.addText(
-//                    note: lookup,
-//                    text: note.markdown,
-//                    mode: .replaceAll,
-//                    options: options
-//                )
-//            }
-//        )
-//    }
-}
-
-public protocol NoteConvertible {
-    var markdown: String { get }
-    init(markdown: String)
+	
+	public static func addFile(
+		note lookup: Note.Lookup,
+		file: File,
+		at header: String? = nil,
+		mode: AddMode,
+		options: Options = [.hideNote, .hideWindow],
+		onSuccess handleSuccess: @escaping SuccessHandler<AddFile>
+	) {
+		Bear.addFile(
+			note: lookup,
+			file: file,
+			at: header,
+			mode: mode,
+			options: options,
+			onSuccess: handleSuccess,
+			onError: { }
+		)
+	}
+	
 }
