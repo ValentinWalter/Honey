@@ -216,6 +216,26 @@ public extension Bear {
             }
         )
     }
+	
+	
+	//MARK:- Open Tab
+	
+	static func open(tab: Tab) {
+		switch tab {
+		case .untagged:
+			Bear().run(action: Untagged(), with: .init(showWindow: true), then: nil)
+		case .todo:
+			Bear().run(action: Todo(),     with: .init(showWindow: true), then: nil)
+		case .today:
+			Bear().run(action: Today(),    with: .init(showWindow: true), then: nil)
+		case .locked:
+			Bear().run(action: Locked(),   with: .init(showWindow: true), then: nil)
+		case .archive:
+			Bear().run(action: Archive(),  with: .init(showWindow: true), then: nil)
+		case .trash:
+			Bear().run(action: Trash(),    with: .init(showWindow: true), then: nil)
+		}
+	}
 
 
     //MARK:- Add Text
@@ -384,11 +404,11 @@ public extension Bear {
 	}
 	
 	
-	//MARK:- Get Tags
+	//MARK:- All Tags
 	
 	/// Get all tags in use.
 	/// - Parameter handleSuccess: A closure called on success with the output of this action.
-	static func getTags(
+	static func allTags(
 		onSuccess handleSuccess: @escaping SuccessHandler<Tags>
 	) {
 		guard let token = token else {
