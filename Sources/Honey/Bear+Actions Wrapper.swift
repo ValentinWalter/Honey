@@ -36,7 +36,16 @@ extension Bear {
 public extension Bear {
 
     //MARK:- Create
-
+	
+	/// Creates a note and returns its content and ID.
+	/// - Parameters:
+	///   - note: The note's contents.
+	///   - tags: Any tags you want your note to have.
+	///   - file: A `File` to be included in your note.
+	///   - options: Various options to further customize Bear's specific
+	///              behavior during creation.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func create(
         note: Note,
         tags: [Tag] = [],
@@ -75,6 +84,14 @@ public extension Bear {
         )
     }
 	
+	/// Creates a note and returns its content and ID.
+	/// - Parameters:
+	///   - note: The note's contents.
+	///   - tags: Any tags you want your note to have.
+	///   - file: A `File` to be included in your note.
+	///   - options: Various options to further customize Bear's specific
+	///              behavior during creation.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func create(
 		note: Note,
 		tags: [Tag] = [],
@@ -94,7 +111,15 @@ public extension Bear {
 
 
     //MARK:- Open
-
+	
+	/// Opens a note and returns its contents.
+	/// - Parameters:
+	///   - note: The note you want to open.
+	///   - header: Any header within the note to be scrolled to.
+	///   - options: Various options to further customize Bear's specific
+	///              behavior during the opening of the note.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func open(
         note: Note.Lookup,
         at header: String? = nil,
@@ -131,6 +156,13 @@ public extension Bear {
         )
     }
 
+	/// Opens a note and returns its contents.
+	/// - Parameters:
+	///   - note: The note you want to open.
+	///   - header: Any header within the note to be scrolled to.
+	///   - options: Various options to further customize Bear's specific
+	///              behavior during the opening of the note.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func open(
 		note: Note.Lookup,
 		at header: String? = nil,
@@ -148,7 +180,12 @@ public extension Bear {
 	
 
     //MARK:- Read
-
+	
+	/// Returns the contents of a note without opening it.
+	/// - Parameters:
+	///   - lookup: The note you want to read.
+	///   - excludeTrashed: Whether to exlude trashed notes.
+	///   - handler: A closure with the contents of the note.
 	static func read(
         note lookup: Note.Lookup,
         excludeTrashed: Bool = false,
@@ -182,7 +219,18 @@ public extension Bear {
 
 
     //MARK:- Add Text
-
+	
+	/// Prepend, append or replace text within a note.
+	/// - Parameters:
+	///   - lookup: The note you want to modify.
+	///   - text: The text you mean to add.
+	///   - header: Any header within the note.
+	///   - mode: Prepend, append, replace all or replace (and keep title).
+	///   - tags: Any tags you want to add to the note.
+	///   - options: Various options to further customize Bear's specific
+	///              behavior.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func addText(
         note lookup: Note.Lookup,
         text: String,
@@ -225,6 +273,16 @@ public extension Bear {
         )
     }
 	
+	/// Prepend, append or replace text within a note.
+	/// - Parameters:
+	///   - lookup: The note you want to modify.
+	///   - text: The text you mean to add.
+	///   - header: Any header within the note.
+	///   - mode: Prepend, append, replace all or replace (and keep title).
+	///   - tags: Any tags you want to add to the note.
+	///   - options: Various options to further customize Bear's specific
+	///              behavior.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func addText(
 		note lookup: Note.Lookup,
 		text: String,
@@ -248,7 +306,17 @@ public extension Bear {
     
     
     //MARK:- Add File
-
+	
+	/// Add files and images to notes.
+	/// - Parameters:
+	///   - lookup: The note you want to add a file to.
+	///   - file: The file you want to add.
+	///   - header: The header under which to add the file.
+	///   - mode: Prepend, append, replace all or replace (and keep title).
+	///   - options: Various options to further customize Bear's specific
+	///              behavior.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func addFile(
         note lookup: Note.Lookup,
         file: File,
@@ -287,6 +355,15 @@ public extension Bear {
         )
     }
 	
+	/// Add files and images to notes.
+	/// - Parameters:
+	///   - lookup: The note you want to add a file to.
+	///   - file: The file you want to add.
+	///   - header: The header under which to add the file.
+	///   - mode: Prepend, append, replace all or replace (and keep title).
+	///   - options: Various options to further customize Bear's specific
+	///              behavior.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func addFile(
 		note lookup: Note.Lookup,
 		file: File,
@@ -309,6 +386,8 @@ public extension Bear {
 	
 	//MARK:- Get Tags
 	
+	/// Get all tags in use.
+	/// - Parameter handleSuccess: A closure called on success with the output of this action.
 	static func getTags(
 		onSuccess handleSuccess: @escaping SuccessHandler<Tags>
 	) {
@@ -339,6 +418,11 @@ public extension Bear {
 	
 	//MARK:- Open Tag
 	
+	/// Open a specific tag.
+	/// - Parameters:
+	///   - tag: The tag you want to open.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func open(
 		tag: Tag,
 		onSuccess handleSuccess: @escaping SuccessHandler<OpenTag> = { _ in },
@@ -372,6 +456,10 @@ public extension Bear {
 		)
 	}
 	
+	/// Open a specific tag.
+	/// - Parameters:
+	///   - tag: The tag you want to open.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func open(
 		tag: Tag,
 		onSuccess handleSuccess: @escaping SuccessHandler<OpenTag>
@@ -386,6 +474,13 @@ public extension Bear {
 	
 	//MARK:- Rename Tag
 	
+	/// Rename a tag.
+	/// - Parameters:
+	///   - tag: The tag to rename.
+	///   - newName: The new name.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func rename(
 		tag: Tag,
 		to newName: String,
@@ -415,6 +510,12 @@ public extension Bear {
 		)
 	}
 	
+	/// Rename a tag.
+	/// - Parameters:
+	///   - tag: The tag to rename.
+	///   - newName: The new name.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func rename(
 		tag: Tag,
 		to newName: String,
@@ -433,6 +534,12 @@ public extension Bear {
 	
 	//MARK:- Delete Tag
 	
+	/// Delete a tag.
+	/// - Parameters:
+	///   - tag: The tag to delete.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func delete(
 		tag: Tag,
  		showWindow: Bool = true,
@@ -460,6 +567,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Delete a tag.
+	/// - Parameters:
+	///   - tag: The tag to delete.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func delete(
 		tag: Tag,
 		showWindow: Bool = true,
@@ -476,6 +588,12 @@ public extension Bear {
 	
 	//MARK:- Trash
 	
+	/// Move a note to the trash.
+	/// - Parameters:
+	///   - id: The id of the note.
+	///   - showWindow: Whether to show the window. Defaults to true.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func trash(
 		id: String,
 		showWindow: Bool = true,
@@ -499,6 +617,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Move a note to the trash.
+	/// - Parameters:
+	///   - id: The id of the note.
+	///   - showWindow: Whether to show the window. Defaults to true.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func trash(
 		id: String,
 		showWindow: Bool = true,
@@ -512,6 +635,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Search the trash for notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func searchTrash(
 		for query: String,
 		onSuccess handleSuccess: @escaping Closure = { },
@@ -534,6 +662,10 @@ public extension Bear {
 		)
 	}
 	
+	/// Search the trash for notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func searchTrash(
 		for query: String,
 		onSuccess handleSuccess: @escaping Closure = { }
@@ -548,6 +680,12 @@ public extension Bear {
 	
 	//MARK:- Archive
 	
+	/// Archive a note.
+	/// - Parameters:
+	///   - id: The id of the note.
+	///   - showWindow: Whether to show the window. Defaults to true.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func archive(
 		id: String,
 		showWindow: Bool = true,
@@ -571,6 +709,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Archive a note.
+	/// - Parameters:
+	///   - id: The id of the note.
+	///   - showWindow: Whether to show the window. Defaults to true.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func archive(
 		id: String,
 		showWindow: Bool = true,
@@ -584,6 +727,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Search the archive for notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func searchArchive(
 		for query: String,
 		onSuccess handleSuccess: @escaping Closure = { },
@@ -606,6 +754,10 @@ public extension Bear {
 		)
 	}
 	
+	/// Search the archive for notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func searchArchive(
 		for query: String,
 		onSuccess handleSuccess: @escaping Closure = { }
@@ -620,16 +772,29 @@ public extension Bear {
 	
 	//MARK:- Untagged
 	
+	/// Get all untagged notes.
+	/// - Parameters:
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func allUntagged(
 		showWindow: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<Untagged> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
+		guard let token = token else {
+			fatalError("""
+			⛔️ `allUntagged` requires a token to be present.
+			ℹ️ Provide your Bear API token via `Bear.token = "..."`
+			""")
+		}
+		
 		Bear().run(
 			action: Untagged(),
 			with: .init(
 				search: nil,
-				showWindow: showWindow
+				showWindow: showWindow,
+				token: token
 			),
 			then: { response in
 				switch response {
@@ -646,8 +811,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Get all untagged notes.
+	/// - Parameters:
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func allUntagged(
-		for query: String,
 		showWindow: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<Today>
 	) {
@@ -658,17 +826,31 @@ public extension Bear {
 		)
 	}
 	
+	/// Search all untagged notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func searchUntagged(
 		for query: String,
 		showWindow: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<Untagged> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
+		guard let token = token else {
+			fatalError("""
+			⛔️ `searchUntagged` requires a token to be present.
+			ℹ️ Provide your Bear API token via `Bear.token = "..."`
+			""")
+		}
+		
 		Bear().run(
 			action: Untagged(),
 			with: .init(
 				search: query,
-				showWindow: showWindow
+				showWindow: showWindow,
+				token: token
 			),
 			then: { response in
 				switch response {
@@ -685,6 +867,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Search all untagged notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func searchUntagged(
 		for query: String,
 		showWindow: Bool = false,
@@ -701,16 +888,29 @@ public extension Bear {
 	
 	//MARK:- Todo
 	
+	/// Get all untagged notes.
+	/// - Parameters:
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func allTodos(
 		showWindow: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<Todo> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
+		guard let token = token else {
+			fatalError("""
+			⛔️ `allTodos` requires a token to be present.
+			ℹ️ Provide your Bear API token via `Bear.token = "..."`
+			""")
+		}
+		
 		Bear().run(
 			action: Todo(),
 			with: .init(
 				search: nil,
-				showWindow: showWindow
+				showWindow: showWindow,
+				token: token
 			),
 			then: { response in
 				switch response {
@@ -727,6 +927,10 @@ public extension Bear {
 		)
 	}
 	
+	/// Get all untagged notes.
+	/// - Parameters:
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func allTodos(
 		for query: String,
 		showWindow: Bool = false,
@@ -739,17 +943,31 @@ public extension Bear {
 		)
 	}
 	
+	/// Search all untagged notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func searchTodos(
 		for query: String,
 		showWindow: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<Todo> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
+		guard let token = token else {
+			fatalError("""
+			⛔️ `searchTodos` requires a token to be present.
+			ℹ️ Provide your Bear API token via `Bear.token = "..."`
+			""")
+		}
+		
 		Bear().run(
 			action: Todo(),
 			with: .init(
 				search: query,
-				showWindow: showWindow
+				showWindow: showWindow,
+				token: token
 			),
 			then: { response in
 				switch response {
@@ -766,6 +984,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Search all untagged notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func searchTodos(
 		for query: String,
 		showWindow: Bool = false,
@@ -782,16 +1005,29 @@ public extension Bear {
 	
 	//MARK:- Today
 	
+	/// Get all untagged notes.
+	/// - Parameters:
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func allToday(
 		showWindow: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<Today> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
+		guard let token = token else {
+			fatalError("""
+			⛔️ `allToday` requires a token to be present.
+			ℹ️ Provide your Bear API token via `Bear.token = "..."`
+			""")
+		}
+		
 		Bear().run(
 			action: Today(),
 			with: .init(
 				search: nil,
-				showWindow: showWindow
+				showWindow: showWindow,
+				token: token
 			),
 			then: { response in
 				switch response {
@@ -808,6 +1044,10 @@ public extension Bear {
 		)
 	}
 	
+	/// Get all untagged notes.
+	/// - Parameters:
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func allToday(
 		for query: String,
 		showWindow: Bool = false,
@@ -820,6 +1060,12 @@ public extension Bear {
 		)
 	}
 	
+	/// Search all untagged notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func searchToday(
 		for query: String,
 		showWindow: Bool = false,
@@ -847,6 +1093,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Search all untagged notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func searchToday(
 		for query: String,
 		showWindow: Bool = false,
@@ -862,7 +1113,12 @@ public extension Bear {
 	
 	
 	//MARK:- Locked
-
+	
+	/// Search locked notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func searchLocked(
 		for query: String,
 		onSuccess handleSuccess: @escaping Closure = { },
@@ -884,6 +1140,10 @@ public extension Bear {
 		)
 	}
 	
+	/// Search locked notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	func searchLocked(
 		for query: String,
 		onSuccess handleSuccess: @escaping Closure
@@ -897,7 +1157,14 @@ public extension Bear {
 	
 	
 	//MARK:- Search
-
+	
+	/// Search all notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - tag: Any tag to filter search results.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func search(
 		for query: String,
 		in tag: Tag,
@@ -935,6 +1202,12 @@ public extension Bear {
 		)
 	}
 	
+	/// Search all notes.
+	/// - Parameters:
+	///   - query: The query to search for.
+	///   - tag: Any tag to filter search results.
+	///   - showWindow: Whether to show the window.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func search(
 		for query: String,
 		in tag: Tag,
@@ -953,7 +1226,13 @@ public extension Bear {
 	
 	//MARK:- Grab URL
 	
-	// wait: false
+	/// Create a note from a website. This action will return immediately.
+	/// - Parameters:
+	///   - url: The url of the website to fetch.
+	///   - tags: Any tags to include in the note
+	///   - pin: Whether to pin this note.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func create(
 		from url: URL,
 		tags: [Tag],
@@ -979,6 +1258,12 @@ public extension Bear {
 		)
 	}
 	
+	/// Create a note from a website. This action will return immediately.
+	/// - Parameters:
+	///   - url: The url of the website to fetch.
+	///   - tags: Any tags to include in the note
+	///   - pin: Whether to pin this note.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func create(
 		from url: URL,
 		tags: [Tag],
@@ -994,7 +1279,14 @@ public extension Bear {
 		)
 	}
 	
-	// wait: true
+	/// Create a note from a website. This action will wait for the note to be
+	/// created and returns the new note's content and id.
+	/// - Parameters:
+	///   - url: The url of the website to fetch.
+	///   - tags: Any tags to include in the note
+	///   - pin: Whether to pin this note.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func create(
 		from url: URL,
 		tags: [Tag],
@@ -1025,6 +1317,13 @@ public extension Bear {
 		)
 	}
 	
+	/// Create a note from a website. This action will wait for the note to be
+	/// created and returns the new note's content and id.
+	/// - Parameters:
+	///   - url: The url of the website to fetch.
+	///   - tags: Any tags to include in the note
+	///   - pin: Whether to pin this note.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func create(
 		from url: URL,
 		tags: [Tag],
@@ -1043,6 +1342,12 @@ public extension Bear {
 	
 	//MARK:- Change Theme
 	
+	/// Change Bear's theme.
+	/// - Parameters:
+	///   - theme: Which theme to change to.
+	///   - showWindow: Whether to show the window. Defaults to true.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func change(
 		theme: Theme,
 		showWindow: Bool = true,
@@ -1065,6 +1370,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Change Bear's theme.
+	/// - Parameters:
+	///   - theme: Which theme to change to.
+	///   - showWindow: Whether to show the window. Defaults to true.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func change(
 		theme: Theme,
 		showWindow: Bool = true,
@@ -1081,6 +1391,12 @@ public extension Bear {
 	
 	//MARK:- Change Font
 	
+	/// Change Bear's font.
+	/// - Parameters:
+	///   - theme: Which font to change to.
+	///   - showWindow: Whether to show the window. Defaults to true.
+	///   - handleSuccess: A closure called on success with the output of this action.
+	///   - handleError: A closure called on any error or cancelation.
 	static func change(
 		font: Font,
 		showWindow: Bool = true,
@@ -1103,6 +1419,11 @@ public extension Bear {
 		)
 	}
 	
+	/// Change Bear's font.
+	/// - Parameters:
+	///   - theme: Which font to change to.
+	///   - showWindow: Whether to show the window. Defaults to true.
+	///   - handleSuccess: A closure called on success with the output of this action.
 	static func change(
 		font: Font,
 		showWindow: Bool = true,

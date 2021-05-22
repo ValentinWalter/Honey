@@ -26,4 +26,6 @@ public struct Bear: App {
     ///
     /// Learn more at about [API Token Generation](https://bear.app/faq/X-callback-url%20Scheme%20documentation/#token-generation).
     public static var token: String? = nil
+	
+	public var scheme: String { "bear" }
 }

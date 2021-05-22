@@ -18,8 +18,8 @@ public extension Bear {
 		CustomQueryConvertible,
 		Codable
 	{
-		public init?(_ description: String) {
-			self.description = description
+		public init?(_ tag: String) {
+			self.description = tag
 		}
 		
 		public init(stringLiteral: String) {

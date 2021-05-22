@@ -8,7 +8,7 @@
 import Foundation
 
 public extension Bear {
-	/// A note as found in *Bear*.
+	/// A note as found in *Bear*. Used to create and read notes.
     struct Note: Codable {
         public var title: String
         public var body: String?
@@ -43,8 +43,8 @@ public extension Bear {
         /// `title` and `body` combined.
         public var markdown: String { body ?? "# " + title }
 
-        /// Publishes the current state to Bear.
-        /// - Parameter open: Whether or not to open the note in the Bear.
+        /// Publishes the current state of the note to Bear.
+        /// - Parameter open: Whether or not to open the note in Bear.
         public func publish(open: Bool = false) {
             Bear.addText(
                 note: .title(title),

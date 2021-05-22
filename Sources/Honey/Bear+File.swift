@@ -9,10 +9,16 @@ import Foundation
 
 public extension Bear {
 	/// Files are used by the `Bear.Create` and `Bear.AddFile` actions.
-    struct File {
-        public let name: String
+	struct File {
+		/// A textual description or title of the file.
+		public let name: String
+		/// The `Data` of the file.
         public let data: Data
-
+		
+		/// Files are used by the `Bear.Create` and `Bear.AddFile` actions.
+		/// - Parameters:
+		///   - name: A textual description or title of the file.
+		///   - data: The `Data` of the file.
         public init(name: String, data: Data) {
             self.name = name
             self.data = data

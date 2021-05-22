@@ -9,7 +9,7 @@ import Honey
 
 struct Honey: ParsableCommand {
     func run() throws {
-		Bear.open(note: .title("test"))
+		
     }
 }
 
