@@ -39,7 +39,7 @@ public extension Bear {
 
 	static func create(
         note: Note,
-        tags: [String] = [],
+        tags: [Tag] = [],
         file: File? = nil,
         options: Options = [],
 		onSuccess handleSuccess: @escaping SuccessHandler<Create> = { _ in },
@@ -77,7 +77,7 @@ public extension Bear {
 	
 	static func create(
 		note: Note,
-		tags: [String] = [],
+		tags: [Tag] = [],
 		file: File? = nil,
 		options: Options = [],
 		onSuccess handleSuccess: @escaping SuccessHandler<Create>
@@ -188,7 +188,7 @@ public extension Bear {
         text: String,
 		at header: String? = nil,
         mode: AddMode,
-        tags: [String] = [],
+        tags: [Tag] = [],
 		options: Options = [.hideNote, .hideWindow],
 		onSuccess handleSuccess: @escaping SuccessHandler<AddText> = { _ in },
         onError handleError: @escaping Closure = { }
@@ -230,7 +230,7 @@ public extension Bear {
 		text: String,
 		at header: String? = nil,
 		mode: AddMode,
-		tags: [String] = [],
+		tags: [Tag] = [],
 		options: Options = [.hideNote, .hideWindow],
 		onSuccess handleSuccess: @escaping SuccessHandler<AddText>
 	) {
@@ -340,7 +340,7 @@ public extension Bear {
 	//MARK:- Open Tag
 	
 	static func open(
-		tag: String,
+		tag: Tag,
 		onSuccess handleSuccess: @escaping SuccessHandler<OpenTag> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
@@ -373,7 +373,7 @@ public extension Bear {
 	}
 	
 	static func open(
-		tag: String,
+		tag: Tag,
 		onSuccess handleSuccess: @escaping SuccessHandler<OpenTag>
 	) {
 		Bear.open(
@@ -387,7 +387,7 @@ public extension Bear {
 	//MARK:- Rename Tag
 	
 	static func rename(
-		tag: String,
+		tag: Tag,
 		to newName: String,
 		showWindow: Bool = true,
 		onSuccess handleSuccess: @escaping SuccessHandler<RenameTag> = { _ in },
@@ -416,7 +416,7 @@ public extension Bear {
 	}
 	
 	static func rename(
-		tag: String,
+		tag: Tag,
 		to newName: String,
 		showWindow: Bool = true,
 		onSuccess handleSuccess: @escaping SuccessHandler<RenameTag>
@@ -434,7 +434,7 @@ public extension Bear {
 	//MARK:- Delete Tag
 	
 	static func delete(
-		tag: String,
+		tag: Tag,
  		showWindow: Bool = true,
 		onSuccess handleSuccess: @escaping SuccessHandler<DeleteTag> = { _ in },
 		onError handleError: @escaping Closure = { }
@@ -461,7 +461,7 @@ public extension Bear {
 	}
 	
 	static func delete(
-		tag: String,
+		tag: Tag,
 		showWindow: Bool = true,
 		onSuccess handleSuccess: @escaping SuccessHandler<DeleteTag>
 	) {
@@ -900,7 +900,7 @@ public extension Bear {
 
 	static func search(
 		for query: String,
-		in tag: String,
+		in tag: Tag,
 		showWindow: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<Search> = { _ in },
 		onError handleError: @escaping Closure = { }
@@ -937,7 +937,7 @@ public extension Bear {
 	
 	static func search(
 		for query: String,
-		in tag: String,
+		in tag: Tag,
 		showWindow: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<Search>
 	) {
@@ -956,7 +956,7 @@ public extension Bear {
 	// wait: false
 	static func create(
 		from url: URL,
-		tags: [String],
+		tags: [Tag],
 		pin: Bool = false,
 		onSuccess handleSuccess: @escaping Closure = { },
 		onError handleError: @escaping Closure = { }
@@ -981,7 +981,7 @@ public extension Bear {
 	
 	static func create(
 		from url: URL,
-		tags: [String],
+		tags: [Tag],
 		pin: Bool = false,
 		onSuccess handleSuccess: @escaping Closure
 	) {
@@ -997,7 +997,7 @@ public extension Bear {
 	// wait: true
 	static func create(
 		from url: URL,
-		tags: [String],
+		tags: [Tag],
 		pin: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<GrabURL> = { _ in },
 		onError handleError: @escaping Closure = { }
@@ -1027,7 +1027,7 @@ public extension Bear {
 	
 	static func create(
 		from url: URL,
-		tags: [String],
+		tags: [Tag],
 		pin: Bool = false,
 		onSuccess handleSuccess: @escaping SuccessHandler<GrabURL>
 	) {

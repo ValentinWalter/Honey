@@ -48,7 +48,7 @@ public extension Bear {
         public struct Input: Codable {
             public var title: String?
             public var text: String?
-            public var tags: [String]? = nil
+            public var tags: [Tag]? = nil
             public var file: Data? = nil
             public var filename: String? = nil
             public var openNote: Bool? = nil
@@ -76,7 +76,7 @@ public extension Bear {
             public var header: String? = nil
             public var mode: AddMode? = nil
             public var newLine: Bool? = nil
-            public var tags: [String]? = nil
+            public var tags: [Tag]? = nil
             public var excludeTrashed: Bool? = nil
             public var openNote: Bool? = nil
             public var newWindow: Bool? = nil
@@ -129,7 +129,7 @@ public extension Bear {
 
     struct OpenTag: Action {
         public struct Input: Codable {
-            public var name: String
+            public var name: Tag
             public var token: String?
         }
 
@@ -141,7 +141,7 @@ public extension Bear {
 
     struct RenameTag: Action {
         public struct Input: Codable {
-            public var name: String
+            public var name: Tag
             public var newName: String
             public var showWindow: Bool? = nil
         }
@@ -154,7 +154,7 @@ public extension Bear {
 
     struct DeleteTag: Action {
         public struct Input: Codable {
-            public var name: String
+            public var name: Tag
             public var showWindow: Bool? = nil
         }
 
@@ -244,7 +244,7 @@ public extension Bear {
     struct Search: Action {
         public struct Input: Codable {
             public var search: String?
-            public var tag: String? = nil
+            public var tag: Tag? = nil
             public var showWindow: Bool? = nil
             public var token: String?
         }
@@ -258,7 +258,7 @@ public extension Bear {
     struct GrabURL: Action {
         public struct Input: Codable {
             public var url: URL
-            public var tags: [String]? = nil
+            public var tags: [Tag]? = nil
             public var pin: Bool? = nil
             public var wait: Bool?
         }

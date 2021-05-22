@@ -45,7 +45,7 @@ public extension Bear {
 
         /// Publishes the current state to Bear.
         /// - Parameter open: Whether or not to open the note in the Bear.
-        func publish(open: Bool = false) {
+        public func publish(open: Bool = false) {
             Bear.addText(
                 note: .title(title),
                 text: markdown,
@@ -68,11 +68,21 @@ public extension Bear {
 
 extension Bear.Note {
 	/// Look up notes by either a `title` or an `id`.
+	///
+	/// Additionally, this type can be useful to use as namespace for notes you
+	/// use often. Just declare
+	///
+	///     static let myNote: Lookup = .title("📝 My Note")
+	///
+	/// in an extension of `Note.Lookup`. You can now use this actions like `Bear.open`.
+	///
+	///     Bear.open(note: .myNote)
+	///
 	public enum Lookup {
 		case title(String)
 		case id(String)
 		
-		var title: String? {
+		public var title: String? {
 			if case let .title(title) = self {
 				return title
 			} else {
@@ -80,7 +90,7 @@ extension Bear.Note {
 			}
 		}
 		
-		var id: String? {
+		public var id: String? {
 			if case let .id(id) = self {
 				return id
 			} else {
