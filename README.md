@@ -1,30 +1,30 @@
-# Honey
-A Swift API for interacting with Bear. If it's on [Bear's documentation](https://bear.app/faq/X-callback-url%20Scheme%20documentation/), Honey can do it.
+# 🍯 Honey
+**A Swift API for interacting with Bear.** If it's on [Bear's documentation](https://bear.app/faq/X-callback-url%20Scheme%20documentation/), Honey can do it. Honey is based on [Middleman](https://github.com/ValentinWalter/Middleman/tree/pre-release).
 
-> Based on [Middleman](https://github.com/ValentinWalter/Middleman/tree/pre-release).
+| Action | Implemented as |
+|:--|:--|
+| /open-note | `open(note:)` |
+| /create | `create(note:)` |
+| /add-text | `addText()` |
+| /add-file | `addFile()` |
+| /tags | `allTags()` |
+| /open-tag | `open(tag:)` |
+| /rename-tag | `rename(tag:)` |
+| /delete-tag | `delete(tag:)` |
+| /trash | `trash()` |
+| /archive | `archive()` |
+| /untagged | `allUntagged()` `searchUntagged()` |
+| /todo | `allTodos()` `searchTodos()` |
+| /today | `allToday()` `searchToday()` |
+| /locked | `searchLocked()` |
+| /search | `search(for:)` |
+| /grab-url | `create(from:)` |
+| /change-theme | `change(theme:)` |
+| /change-font | `change(font:)` |
 
-| Action | App API | Middleman API |
-|:--|:--|:--|
-| /open-note | ✅ | ✅ |
-| /create | ✅ | ✅ |
-| /add-text | ✅ | ✅ |
-| /add-file | ✅ | ✅ |
-| /tags | ❌ | ✅ |
-| /open-tag | ❌ | ✅ |
-| /rename-tag | ❌ | ✅ |
-| /delete-tag | ❌ | ✅ |
-| /trash | ❌ | ✅ |
-| /archive | ❌ | ✅ |
-| /untagged | ❌ | ✅ |
-| /todo | ❌ | ✅ |
-| /today | ❌ | ✅ |
-| /locked | ❌ | ✅ |
-| /search | ❌ | ✅ |
-| /grab-url | ❌ | ✅ |
-| /change-theme | ❌ | ✅ |
-| /change-font | ❌ |✅  |
-
-***App API** refers to the convenience functions you can see below. **Middleman API** is the low-level implementation that is more verbose to use.*
+#### Extra goodies
+* `read(note:)` Returns the content of a note without opening it.
+* `open(tab:)` Opens one of Bear's tabs, eg. Untagged/Locked/Trash…
 
 ## Create notes
 Let's create a shopping list.
