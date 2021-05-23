@@ -1,13 +1,15 @@
 # 🍯 Honey
 **A Swift API for interacting with Bear.** If it's on [Bear's documentation](https://bear.app/faq/X-callback-url%20Scheme%20documentation/), Honey can do it.
 
-Honey is based on [Middleman](https://github.com/ValentinWalter/Middleman/tree/pre-release), a completely type-safe way of handling the [x-callback-url](http://x-callback-url.com) scheme. `x-callback-url` can be a fickle thing to work with and Bear's API is not the most consistent: type-safety can go a long way in helping you work with this. Auto-complete will enable you to discover the API as you work with it. Honey also handles repetitive tasks, like passing Bear's API token where it's required.
+Honey is based on [Middleman](https://github.com/ValentinWalter/Middleman/tree/pre-release), a completely type-safe way of handling the [x-callback-url](http://x-callback-url.com) scheme. `x-callback-url` can be a fickle thing to work with and Bear's API is not the most consistent: type-safety can go a long way in helping you work with this. Auto-complete will enable you to discover the API as you work with it. Honey also handles repetitive tasks, like passing Bear's API token where it's required or base64-encoding images and files.
 
 - [Overview](#overview)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Actions](#actions)
-- [Types](#types)
+- [Setup](#setup)
+    - [Installation](#installation)
+    - [Configuration](#configuration)
+- [API](#api)
+    - [Actions](#actions)
+    - [Types](#types)
 
 ### Overview
 | Action | Implemented as |
@@ -71,7 +73,7 @@ Honey is a Swift Package. Install it by pasting this in your `Package.swift`:
 let package = Package(
     ...
     dependencies: [
-        .package(url: "https://github.com/ValentinWalter/honey.git", .branch("pre-release"))
+        .package(url: "https://github.com/ValentinWalter/honey.git", from: "1.0.0")
     ],
     ...
 )
