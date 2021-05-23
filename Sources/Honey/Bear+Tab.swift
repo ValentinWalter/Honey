@@ -8,6 +8,7 @@
 import Foundation
 
 public enum Tab {
+	case all
 	case untagged
 	case todo
 	case today

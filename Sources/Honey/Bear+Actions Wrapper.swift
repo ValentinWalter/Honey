@@ -249,6 +249,8 @@ public extension Bear {
 	/// - Parameter tab: The tab or tag to open.
 	static func open(tab: Tab) {
 		switch tab {
+		case .all:
+			Bear().run(action: Search(),   with: .init(showWindow: true), then: nil)
 		case .untagged:
 			Bear().run(action: Untagged(), with: .init(showWindow: true), then: nil)
 		case .todo:
