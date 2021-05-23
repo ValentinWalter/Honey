@@ -46,9 +46,9 @@ public extension Bear {
         /// Publishes the current state of the note to Bear.
         /// - Parameter open: Whether or not to open the note in Bear.
         public func publish(open: Bool = false) {
-            Bear.addText(
-                note: .title(title),
-                text: markdown,
+            Bear.add(
+				text: markdown,
+                to: .title(title),
                 mode: .replaceAll,
                 options: open ? [] : .hideNote
             )

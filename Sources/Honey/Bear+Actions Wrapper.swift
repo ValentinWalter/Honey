@@ -242,8 +242,8 @@ public extension Bear {
 	
 	/// Prepend, append or replace text within a note.
 	/// - Parameters:
-	///   - lookup: The note you want to modify.
 	///   - text: The text you mean to add.
+	///   - note: The note you want to modify.
 	///   - header: Any header within the note.
 	///   - mode: Prepend, append, replace all or replace (and keep title).
 	///   - tags: Any tags you want to add to the note.
@@ -251,9 +251,9 @@ public extension Bear {
 	///              behavior.
 	///   - handleSuccess: A closure called on success with the output of this action.
 	///   - handleError: A closure called on any error or cancelation.
-	static func addText(
-        note lookup: Note.Lookup,
-        text: String,
+	static func add(
+		text: String,
+        to note: Note.Lookup,
 		at header: String? = nil,
         mode: AddMode,
         tags: [Tag] = [],
@@ -264,8 +264,8 @@ public extension Bear {
         Bear().run(
             action: AddText(),
             with: .init(
-                id: lookup.id,
-                title: lookup.title,
+                id: note.id,
+                title: note.title,
                 text: text,
                 header: header,
                 mode: mode,
@@ -303,18 +303,18 @@ public extension Bear {
 	///   - options: Various options to further customize Bear's specific
 	///              behavior.
 	///   - handleSuccess: A closure called on success with the output of this action.
-	static func addText(
-		note lookup: Note.Lookup,
+	static func add(
 		text: String,
+		to note: Note.Lookup,
 		at header: String? = nil,
 		mode: AddMode,
 		tags: [Tag] = [],
 		options: Options = [.hideNote, .hideWindow],
 		onSuccess handleSuccess: @escaping SuccessHandler<AddText>
 	) {
-		Bear.addText(
-			note: lookup,
+		Bear.add(
 			text: text,
+			to: note,
 			at: header,
 			mode: mode,
 			tags: tags,
@@ -337,9 +337,9 @@ public extension Bear {
 	///              behavior.
 	///   - handleSuccess: A closure called on success with the output of this action.
 	///   - handleError: A closure called on any error or cancelation.
-	static func addFile(
-        note lookup: Note.Lookup,
-        file: File,
+	static func add(
+		file: File,
+        to note: Note.Lookup,
         at header: String? = nil,
         mode: AddMode,
 		options: Options = [.hideNote, .hideWindow],
@@ -349,8 +349,8 @@ public extension Bear {
         Bear().run(
             action: AddFile(),
             with: AddFile.Input(
-                id: lookup.id,
-                title: lookup.title,
+                id: note.id,
+                title: note.title,
                 file: file.data,
                 header: header,
                 filename: file.name,
@@ -384,17 +384,17 @@ public extension Bear {
 	///   - options: Various options to further customize Bear's specific
 	///              behavior.
 	///   - handleSuccess: A closure called on success with the output of this action.
-	static func addFile(
-		note lookup: Note.Lookup,
+	static func add(
 		file: File,
+		to note: Note.Lookup,
 		at header: String? = nil,
 		mode: AddMode,
 		options: Options = [.hideNote, .hideWindow],
 		onSuccess handleSuccess: @escaping SuccessHandler<AddFile>
 	) {
-		Bear.addFile(
-			note: lookup,
+		Bear.add(
 			file: file,
+			to: note,
 			at: header,
 			mode: mode,
 			options: options,
