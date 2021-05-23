@@ -1,5 +1,5 @@
 //
-//  Bear+Actions+init.swift
+//  Bear+Actions+create.swift
 //  Honey
 //
 //  Created by Valentin Walter on 5/22/21.
@@ -124,9 +124,9 @@ extension Bear.Create.Input {
 }
 
 extension Bear.Create.Output {
-	public static func create(identifier: String, title: String) -> Bear.Create.Output {
+	public static func create(id: String, title: String) -> Bear.Create.Output {
 		self.init(
-			identifier: identifier,
+			id: id,
 			title: title
 		)
 	}
@@ -153,9 +153,9 @@ extension Bear.GrabURL.Input {
 }
 
 extension Bear.GrabURL.Output {
-	public static func create(identifier: String, title: String) -> Bear.GrabURL.Output {
+	public static func create(id: String, title: String) -> Bear.GrabURL.Output {
 		self.init(
-			identifier: identifier,
+			id: id,
 			title: title
 		)
 	}
@@ -190,10 +190,10 @@ extension Bear.OpenNote.Input {
 }
 
 extension Bear.OpenNote.Output {
-	public static func create(note: String, identifier: String, title: String, tags: [Bear.Tag], isTrashed: Bool, modificationDate: Date, creationDate: Date) -> Bear.OpenNote.Output {
+	public static func create(note: String, id: String, title: String, tags: [Bear.Tag], isTrashed: Bool, modificationDate: Date, creationDate: Date) -> Bear.OpenNote.Output {
 		self.init(
 			note: note,
-			identifier: identifier,
+			id: id,
 			title: title,
 			tags: tags,
 			isTrashed: isTrashed,

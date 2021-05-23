@@ -22,7 +22,7 @@ public extension Bear {
         internal init(from output: OpenNote.Output) {
             self.title = output.title
             self.body = output.note
-            self.id = output.identifier
+            self.id = output.id
 			self.tags = output.tags
             self.modificationDate = output.modificationDate
             self.creationDate = output.creationDate

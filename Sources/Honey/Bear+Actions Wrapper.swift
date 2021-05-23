@@ -76,7 +76,7 @@ public extension Bear {
                 openNote: !options.contains(.hideNote),
                 newWindow: options.contains(.newWindow),
                 showWindow: !options.contains(.hideWindow),
-                pin: options.contains(.pin),
+				pin: note.isPinned ?? false || options.contains(.pin),
                 edit: options.contains(.edit),
                 timestamp: options.contains(.timestamp)
             ),

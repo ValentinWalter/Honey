@@ -33,7 +33,7 @@ public extension Bear {
 
         public struct Output: Codable {
             public let note: String
-            public let identifier: String
+            public let id: String
             public let title: String
 			public let tags: [Tag]
             public let isTrashed: Bool
@@ -65,7 +65,7 @@ public extension Bear {
         }
 
         public struct Output: Codable {
-            public let identifier: String
+            public let id: String
             public let title: String
         }
     }
@@ -273,7 +273,7 @@ public extension Bear {
         }
 
         public struct Output: Codable {
-            public let identifier: String
+            public let id: String
             public let title: String
         }
     }
