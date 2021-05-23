@@ -49,10 +49,10 @@ public extension Bear {
 
     //MARK:- Create
 	
-	/// Creates a note and returns its content and ID.
+	/// Creates a note and returns its content and ID. Set `title`, `body` and
+	/// `tags` via the `note`-parameter.
 	/// - Parameters:
 	///   - note: The note's contents.
-	///   - tags: Any tags you want your note to have.
 	///   - file: A `File` to be included in your note.
 	///   - options: Various options to further customize Bear's specific
 	///              behavior during creation.
@@ -60,7 +60,6 @@ public extension Bear {
 	///   - handleError: A closure called on any error or cancelation.
 	static func create(
         _ note: Note,
-        tags: [Tag] = [],
         file: File? = nil,
         options: Options = [],
 		onSuccess handleSuccess: @escaping SuccessHandler<Create> = { _ in },
@@ -71,7 +70,7 @@ public extension Bear {
             with: .init(
                 title: note.title,
                 text: note.body,
-                tags: tags,
+				tags: note.tags,
                 file: file?.data,
                 filename: file?.name,
                 openNote: !options.contains(.hideNote),
@@ -96,7 +95,8 @@ public extension Bear {
         )
     }
 	
-	/// Creates a note and returns its content and ID.
+	/// Creates a note and returns its content and ID. Set `title`, `body` and
+	/// `tags` via the `note`-parameter.
 	/// - Parameters:
 	///   - note: The note's contents.
 	///   - tags: Any tags you want your note to have.
@@ -113,7 +113,6 @@ public extension Bear {
 	) {
 		Bear.create(
 			note,
-			tags: tags,
 			file: file,
 			options: options,
 			onSuccess: handleSuccess,
