@@ -31,6 +31,18 @@ extension Bear {
         public static let edit           = Options(rawValue: 1 << 6)
 		public static let timestamp      = Options(rawValue: 1 << 7)
     }
+	
+	@discardableResult
+	fileprivate static func assertToken(in action: String) -> String {
+		guard let token = token else {
+			fatalError("""
+			⛔️ `\(action)` requires a token to be present.
+			ℹ️ Provide your Bear API token via `Bear.token = "..."`
+			""")
+		}
+		
+		return token
+	}
 }
 
 public extension Bear {
@@ -127,6 +139,10 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<OpenNote> = { _ in },
         onError handleError: @escaping Closure = { }
     ) {
+		if case .selected = note {
+			assertToken(in: "open(note:)")
+		}
+		
         Bear().run(
             action: OpenNote(),
             with: .init(
@@ -135,11 +151,13 @@ public extension Bear {
                 header: header,
                 excludeTrashed: options.contains(.excludeTrashed),
                 newWindow: options.contains(.newWindow),
+				float: options.contains(.float),
+				showWindow: !options.contains(.hideWindow),
                 openNote: true,
-                float: options.contains(.float),
-                showWindow: !options.contains(.hideWindow),
+				selected: note.selected,
                 pin: options.contains(.pin),
-                edit: options.contains(.edit)
+                edit: options.contains(.edit),
+				token: token
             ),
             then: { response in
                 switch response {
@@ -183,27 +201,33 @@ public extension Bear {
 	
 	/// Returns the contents of a note without opening it.
 	/// - Parameters:
-	///   - lookup: The note you want to read.
+	///   - note: The note you want to read.
 	///   - excludeTrashed: Whether to exlude trashed notes.
 	///   - handler: A closure with the contents of the note.
 	static func read(
-        note lookup: Note.Lookup,
+        note: Note.Lookup,
         excludeTrashed: Bool = false,
         then handler: @escaping Handler<Note>
     ) {
+		if case .selected = note {
+			assertToken(in: "read(note:)")
+		}
+		
         Bear().run(
             action: OpenNote(),
             with: .init(
-                id: lookup.id,
-                title: lookup.title,
+                id: note.id,
+                title: note.title,
                 header: nil,
                 excludeTrashed: excludeTrashed,
                 newWindow: false,
+				float: false,
+				showWindow: false,
                 openNote: false,
-                float: false,
-                showWindow: false,
+				selected: note.selected,
                 pin: false,
-                edit: false
+                edit: false,
+				token: token
             ),
             then: { response in
                 switch response {
@@ -220,6 +244,8 @@ public extension Bear {
 	
 	//MARK:- Open Tab
 	
+	/// Opens a tab or tag in Bear's sidebar.
+	/// - Parameter tab: The tab or tag to open.
 	static func open(tab: Tab) {
 		switch tab {
 		case .untagged:
@@ -234,6 +260,8 @@ public extension Bear {
 			Bear().run(action: Archive(),  with: .init(showWindow: true), then: nil)
 		case .trash:
 			Bear().run(action: Trash(),    with: .init(showWindow: true), then: nil)
+		case .tag(let tag):
+			Bear().run(action: OpenTag(),  with: .init(name: [Tag(tag)]), then: nil)
 		}
 	}
 
@@ -261,11 +289,16 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<AddText> = { _ in },
         onError handleError: @escaping Closure = { }
     ) {
+		if case .selected = note {
+			assertToken(in: "add(text:)")
+		}
+		
         Bear().run(
             action: AddText(),
             with: .init(
                 id: note.id,
                 title: note.title,
+				selected: note.selected,
                 text: text,
                 header: header,
                 mode: mode,
@@ -276,7 +309,8 @@ public extension Bear {
                 newWindow: options.contains(.newWindow),
                 showWindow: !options.contains(.hideWindow),
                 edit: options.contains(.edit),
-                timestamp: options.contains(.timestamp)
+                timestamp: options.contains(.timestamp),
+				token: token
             ),
             then: { response in
                 switch response {
@@ -346,11 +380,16 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<AddFile> = { _ in },
         onError handleError: @escaping Closure = { }
     ) {
+		if case .selected = note {
+			assertToken(in: "add(file:)")
+		}
+		
         Bear().run(
             action: AddFile(),
             with: AddFile.Input(
                 id: note.id,
                 title: note.title,
+				selected: note.selected,
                 file: file.data,
                 header: header,
                 filename: file.name,
@@ -358,7 +397,8 @@ public extension Bear {
                 openNote: !options.contains(.hideNote),
                 newWindow: options.contains(.newWindow),
                 showWindow: !options.contains(.hideWindow),
-                edit: options.contains(.edit)
+                edit: options.contains(.edit),
+				token: token
             ),
             then: { response in
                 switch response {
@@ -448,17 +488,12 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<OpenTag> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
-		guard let token = token else {
-			fatalError("""
-			⛔️ `openTag` requires a token to be present.
-			ℹ️ Provide your Bear API token via `Bear.token = "..."`
-			""")
-		}
+		assertToken(in: "open(tag:)")
 		
 		Bear().run(
 			action: OpenTag(),
 			with: .init(
-				name: tag,
+				name: [tag],
 				token: token
 			),
 			then: { response in
@@ -1202,7 +1237,7 @@ public extension Bear {
 		Bear().run(
 			action: Search(),
 			with: .init(
-				search: query,
+				term: query,
 				tag: tag,
 				showWindow: showWindow,
 				token: token

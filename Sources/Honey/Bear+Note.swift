@@ -13,6 +13,7 @@ public extension Bear {
         public var title: String
         public var body: String?
         public let id: String
+		public let tags: [Tag]?
         public let modificationDate: Date
         public let creationDate: Date
         public let isPinned: Bool?
@@ -22,21 +23,28 @@ public extension Bear {
             self.title = output.title
             self.body = output.note
             self.id = output.identifier
+			self.tags = output.tags
             self.modificationDate = output.modificationDate
             self.creationDate = output.creationDate
             self.isPinned = nil
             self.isTrashed = output.isTrashed
         }
 
-        public init(title: String, body: String?) {
+		public init(
+			title: String,
+			body: String?,
+			tags: [Tag],
+			isPinned: Bool
+		) {
             let now = Date()
 
             self.title = title
             self.body = body
             self.id = UUID().uuidString
+			self.tags = tags
             self.modificationDate = now
             self.creationDate = now
-            self.isPinned = false
+            self.isPinned = isPinned
             self.isTrashed = false
         }
 
@@ -58,6 +66,7 @@ public extension Bear {
             case title
             case body
             case id = "identifier"
+			case tags
             case modificationDate
             case creationDate
             case isPinned = "pin"
@@ -82,6 +91,10 @@ extension Bear.Note {
 		case title(String)
 		case id(String)
 		
+		/// The currently selected note. Always requires API token. Will not
+		/// work in all cases.
+		case selected
+		
 		public var title: String? {
 			if case let .title(title) = self {
 				return title
@@ -95,6 +108,14 @@ extension Bear.Note {
 				return id
 			} else {
 				return nil
+			}
+		}
+		
+		public var selected: Bool {
+			if case .selected = self {
+				return true
+			} else {
+				return false
 			}
 		}
 	}

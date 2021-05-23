@@ -23,17 +23,20 @@ public extension Bear {
             public var header: String? = nil
             public var excludeTrashed: Bool? = nil
             public var newWindow: Bool? = nil
-            public var openNote: Bool? = nil
             public var float: Bool? = nil
             public var showWindow: Bool? = nil
+			public var openNote: Bool? = nil
+			public var selected: Bool? = nil
             public var pin: Bool? = nil
             public var edit: Bool? = nil
+			public var token: String? = nil
         }
 
         public struct Output: Codable {
             public let note: String
             public let identifier: String
             public let title: String
+			public let tags: [Tag]
             public let isTrashed: Bool
             public let modificationDate: Date
             public let creationDate: Date
@@ -48,15 +51,19 @@ public extension Bear {
         public struct Input: Codable {
             public var title: String?
             public var text: String?
+			public var clipboard: Bool? = nil
             public var tags: [Tag]? = nil
             public var file: Data? = nil
             public var filename: String? = nil
             public var openNote: Bool? = nil
             public var newWindow: Bool? = nil
+			public var float: Bool? = nil
             public var showWindow: Bool? = nil
             public var pin: Bool? = nil
             public var edit: Bool? = nil
             public var timestamp: Bool? = nil
+			public var type: String? = nil
+			public var url: String? = nil
         }
 
         public struct Output: Codable {
@@ -72,7 +79,8 @@ public extension Bear {
         public struct Input: Codable {
             public var id: String?
             public var title: String?
-            public var text: String
+			public var selected: Bool? = nil
+            public var text: String?
             public var header: String? = nil
             public var mode: AddMode? = nil
             public var newLine: Bool? = nil
@@ -83,6 +91,7 @@ public extension Bear {
             public var showWindow: Bool? = nil
             public var edit: Bool? = nil
             public var timestamp: Bool? = nil
+			public var token: String? = nil
         }
 
         public struct Output: Codable {
@@ -98,6 +107,7 @@ public extension Bear {
         public struct Input: Codable {
             public var id: String?
             public var title: String?
+			public var selected: Bool? = nil
             public var file: Data
             public var header: String? = nil
             public var filename: String
@@ -106,6 +116,7 @@ public extension Bear {
             public var newWindow: Bool? = nil
             public var showWindow: Bool? = nil
             public var edit: Bool? = nil
+			public var token: String? = nil
         }
 
         public struct Output: Codable {
@@ -121,7 +132,7 @@ public extension Bear {
             public var token: String
         }
 
-        public typealias Output = [String]
+        public typealias Output = [Tag]
     }
 
 
@@ -129,7 +140,7 @@ public extension Bear {
 
     struct OpenTag: Action {
         public struct Input: Codable {
-            public var name: Tag
+            public var name: [Tag]
             public var token: String?
         }
 
@@ -146,7 +157,7 @@ public extension Bear {
             public var showWindow: Bool? = nil
         }
 
-        public typealias Output = [Note]
+        public typealias Output = Never
     }
 
 
@@ -243,7 +254,7 @@ public extension Bear {
 
     struct Search: Action {
         public struct Input: Codable {
-            public var search: String?
+            public var term: String?
             public var tag: Tag? = nil
             public var showWindow: Bool? = nil
             public var token: String?

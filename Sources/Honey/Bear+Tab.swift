@@ -14,4 +14,5 @@ public enum Tab {
 	case locked
 	case archive
 	case trash
+	case tag(String)
 }

@@ -18,7 +18,7 @@ public extension Bear {
 		CustomQueryConvertible,
 		Codable
 	{
-		public init?(_ tag: String) {
+		public init(_ tag: String) {
 			self.description = tag
 		}
 		
@@ -31,6 +31,16 @@ public extension Bear {
 		
 		subscript<T>(dynamicMember dynamicMember: KeyPath<String, T>) -> T {
 			description[keyPath: dynamicMember]
+		}
+		
+		public init(from decoder: Decoder) throws {
+			let container = try decoder.singleValueContainer()
+			self.description = try container.decode(String.self)
+		}
+		
+		public func encode(to encoder: Encoder) throws {
+			var container = encoder.singleValueContainer()
+			try container.encode(description)
 		}
 	}
 }
