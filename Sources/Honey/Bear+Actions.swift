@@ -15,7 +15,6 @@ public extension Bear {
 
     //MARK:- Open Note
 
-    /// Open a note identified by its title or id and return its content.
     struct OpenNote: Action {
         public struct Input: Codable {
             public var id: String?
@@ -46,7 +45,6 @@ public extension Bear {
 
     //MARK:- Create
 
-    /// Create a new note and return its unique identifier. Empty notes are not allowed.
     struct Create: Action {
         public struct Input: Codable {
             public var title: String?

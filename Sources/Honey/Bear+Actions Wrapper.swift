@@ -124,7 +124,8 @@ public extension Bear {
 
     //MARK:- Open
 	
-	/// Opens a note and returns its contents.
+	/// Opens a note and returns its contents. You need to have set `Bear.token`
+	/// when using `Note.Lookup.selected`.
 	/// - Parameters:
 	///   - note: The note you want to open.
 	///   - header: Any header within the note to be scrolled to.
@@ -199,7 +200,8 @@ public extension Bear {
 
     //MARK:- Read
 	
-	/// Returns the contents of a note without opening it.
+	/// Returns the contents of a note without opening it. You need to have set
+	/// `Bear.token` when using `Note.Lookup.selected`.
 	/// - Parameters:
 	///   - note: The note you want to read.
 	///   - excludeTrashed: Whether to exlude trashed notes.
@@ -268,7 +270,8 @@ public extension Bear {
 
     //MARK:- Add Text
 	
-	/// Prepend, append or replace text within a note.
+	/// Prepend, append or replace text within a note. You need to have set
+	/// `Bear.token` when using `Note.Lookup.selected`.
 	/// - Parameters:
 	///   - text: The text you mean to add.
 	///   - note: The note you want to modify.
@@ -361,7 +364,8 @@ public extension Bear {
     
     //MARK:- Add File
 	
-	/// Add files and images to notes.
+	/// Add files and images to notes. You need to have set `Bear.token` when
+	/// using `Note.Lookup.selected`.
 	/// - Parameters:
 	///   - lookup: The note you want to add a file to.
 	///   - file: The file you want to add.
@@ -446,17 +450,12 @@ public extension Bear {
 	
 	//MARK:- All Tags
 	
-	/// Get all tags in use.
+	/// Get all tags in use. This action requires `Bear.token` to be present.
 	/// - Parameter handleSuccess: A closure called on success with the output of this action.
 	static func allTags(
 		onSuccess handleSuccess: @escaping SuccessHandler<Tags>
 	) {
-		guard let token = token else {
-			fatalError("""
-			⛔️ `getTags` requires a token to be present.
-			ℹ️ Provide your Bear API token via `Bear.token = "..."`
-			""")
-		}
+		let token = assertToken(in: "allTags()")
 		
 		Bear().run(
 			action: Tags(),
@@ -478,22 +477,23 @@ public extension Bear {
 	
 	//MARK:- Open Tag
 	
-	/// Open a specific tag.
+	/// Open a specific tag. This action requires `Bear.token` to be present.
+	/// If all you want to do is open a tag in Bear's sidebar, use `open(tab:)`.
 	/// - Parameters:
 	///   - tag: The tag you want to open.
 	///   - handleSuccess: A closure called on success with the output of this action.
 	///   - handleError: A closure called on any error or cancelation.
 	static func open(
-		tag: Tag,
+		tags: [Tag],
 		onSuccess handleSuccess: @escaping SuccessHandler<OpenTag> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
-		assertToken(in: "open(tag:)")
+		assertToken(in: "open(tags:)")
 		
 		Bear().run(
 			action: OpenTag(),
 			with: .init(
-				name: [tag],
+				name: tags,
 				token: token
 			),
 			then: { response in
@@ -511,16 +511,17 @@ public extension Bear {
 		)
 	}
 	
-	/// Open a specific tag.
+	/// Open a specific tag. This action requires `Bear.token` to be present.
+	/// If all you want to do is open a tag in Bear's sidebar, use `open(tab:)`.
 	/// - Parameters:
 	///   - tag: The tag you want to open.
 	///   - handleSuccess: A closure called on success with the output of this action.
 	static func open(
-		tag: Tag,
+		tags: [Tag],
 		onSuccess handleSuccess: @escaping SuccessHandler<OpenTag>
 	) {
 		Bear.open(
-			tag: tag,
+			tags: tags,
 			onSuccess: handleSuccess,
 			onError: { }
 		)
@@ -827,7 +828,9 @@ public extension Bear {
 	
 	//MARK:- Untagged
 	
-	/// Get all untagged notes.
+	/// Get all untagged notes. This action requires `Bear.token` to be present.
+	/// If all you want to do is open the *Untagged* tab in Bear's sidebar,
+	/// use `open(tab:)`.
 	/// - Parameters:
 	///   - showWindow: Whether to show the window.
 	///   - handleSuccess: A closure called on success with the output of this action.
@@ -837,12 +840,7 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<Untagged> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
-		guard let token = token else {
-			fatalError("""
-			⛔️ `allUntagged` requires a token to be present.
-			ℹ️ Provide your Bear API token via `Bear.token = "..."`
-			""")
-		}
+		assertToken(in: "allUntagged()")
 		
 		Bear().run(
 			action: Untagged(),
@@ -866,7 +864,9 @@ public extension Bear {
 		)
 	}
 	
-	/// Get all untagged notes.
+	/// Get all untagged notes. This action requires `Bear.token` to be present.
+	/// If all you want to do is open the *Untagged* tab in Bear's sidebar,
+	/// use `open(tab:)`.
 	/// - Parameters:
 	///   - showWindow: Whether to show the window.
 	///   - handleSuccess: A closure called on success with the output of this action.
@@ -881,7 +881,8 @@ public extension Bear {
 		)
 	}
 	
-	/// Search all untagged notes.
+	/// Search all untagged notes. You need to have set `Bear.token` if you want
+	/// to receive search results.
 	/// - Parameters:
 	///   - query: The query to search for.
 	///   - showWindow: Whether to show the window.
@@ -893,13 +894,6 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<Untagged> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
-		guard let token = token else {
-			fatalError("""
-			⛔️ `searchUntagged` requires a token to be present.
-			ℹ️ Provide your Bear API token via `Bear.token = "..."`
-			""")
-		}
-		
 		Bear().run(
 			action: Untagged(),
 			with: .init(
@@ -922,7 +916,8 @@ public extension Bear {
 		)
 	}
 	
-	/// Search all untagged notes.
+	/// Search all untagged notes. You need to have set `Bear.token` if you want
+	/// to receive search results.
 	/// - Parameters:
 	///   - query: The query to search for.
 	///   - showWindow: Whether to show the window.
@@ -943,7 +938,9 @@ public extension Bear {
 	
 	//MARK:- Todo
 	
-	/// Get all untagged notes.
+	/// Get all notes with todo items. This action requires `Bear.token` to be
+	/// present. If all you want to do is open the *Todo* tab in Bear's sidebar,
+	/// use `open(tab:)`.
 	/// - Parameters:
 	///   - showWindow: Whether to show the window.
 	///   - handleSuccess: A closure called on success with the output of this action.
@@ -953,12 +950,7 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<Todo> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
-		guard let token = token else {
-			fatalError("""
-			⛔️ `allTodos` requires a token to be present.
-			ℹ️ Provide your Bear API token via `Bear.token = "..."`
-			""")
-		}
+		assertToken(in: "allTodos()")
 		
 		Bear().run(
 			action: Todo(),
@@ -982,7 +974,9 @@ public extension Bear {
 		)
 	}
 	
-	/// Get all untagged notes.
+	/// Get all notes with todo items. This action requires `Bear.token` to be
+	/// present. If all you want to do is open the *Todo* tab in Bear's sidebar,
+	/// use `open(tab:)`.
 	/// - Parameters:
 	///   - showWindow: Whether to show the window.
 	///   - handleSuccess: A closure called on success with the output of this action.
@@ -998,7 +992,8 @@ public extension Bear {
 		)
 	}
 	
-	/// Search all untagged notes.
+	/// Search all untagged notes. You need to have set `Bear.token` if you want
+	/// to receive search results.
 	/// - Parameters:
 	///   - query: The query to search for.
 	///   - showWindow: Whether to show the window.
@@ -1010,13 +1005,6 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<Todo> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
-		guard let token = token else {
-			fatalError("""
-			⛔️ `searchTodos` requires a token to be present.
-			ℹ️ Provide your Bear API token via `Bear.token = "..."`
-			""")
-		}
-		
 		Bear().run(
 			action: Todo(),
 			with: .init(
@@ -1039,7 +1027,8 @@ public extension Bear {
 		)
 	}
 	
-	/// Search all untagged notes.
+	/// Search all untagged notes. You need to have set `Bear.token` if you want
+	/// to receive search results.
 	/// - Parameters:
 	///   - query: The query to search for.
 	///   - showWindow: Whether to show the window.
@@ -1060,7 +1049,9 @@ public extension Bear {
 	
 	//MARK:- Today
 	
-	/// Get all untagged notes.
+	/// Get all notes edited today. This action requires `Bear.token` to be
+	/// present. If all you want to do is open the *Today* tab in Bear's
+	/// sidebar, use `open(tab:)`.
 	/// - Parameters:
 	///   - showWindow: Whether to show the window.
 	///   - handleSuccess: A closure called on success with the output of this action.
@@ -1070,12 +1061,7 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<Today> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
-		guard let token = token else {
-			fatalError("""
-			⛔️ `allToday` requires a token to be present.
-			ℹ️ Provide your Bear API token via `Bear.token = "..."`
-			""")
-		}
+		assertToken(in: "allToday()")
 		
 		Bear().run(
 			action: Today(),
@@ -1099,7 +1085,9 @@ public extension Bear {
 		)
 	}
 	
-	/// Get all untagged notes.
+	/// Get all notes edited today. This action requires `Bear.token` to be
+	/// present. If all you want to do is open the *Today* tab in Bear's
+	/// sidebar, use `open(tab:)`.
 	/// - Parameters:
 	///   - showWindow: Whether to show the window.
 	///   - handleSuccess: A closure called on success with the output of this action.
@@ -1115,7 +1103,8 @@ public extension Bear {
 		)
 	}
 	
-	/// Search all untagged notes.
+	/// Search all untagged notes. You need to have set `Bear.token` if you want
+	/// to receive search results.
 	/// - Parameters:
 	///   - query: The query to search for.
 	///   - showWindow: Whether to show the window.
@@ -1131,7 +1120,8 @@ public extension Bear {
 			action: Today(),
 			with: .init(
 				search: query,
-				showWindow: showWindow
+				showWindow: showWindow,
+				token: token
 			),
 			then: { response in
 				switch response {
@@ -1148,7 +1138,8 @@ public extension Bear {
 		)
 	}
 	
-	/// Search all untagged notes.
+	/// Search all untagged notes. You need to have set `Bear.token` if you want
+	/// to receive search results.
 	/// - Parameters:
 	///   - query: The query to search for.
 	///   - showWindow: Whether to show the window.
@@ -1213,7 +1204,8 @@ public extension Bear {
 	
 	//MARK:- Search
 	
-	/// Search all notes.
+	/// Search all notes. You need to have set `Bear.token` if you want to
+	/// receive search results.
 	/// - Parameters:
 	///   - query: The query to search for.
 	///   - tag: Any tag to filter search results.
@@ -1227,13 +1219,6 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<Search> = { _ in },
 		onError handleError: @escaping Closure = { }
 	) {
-		guard let token = token else {
-			fatalError("""
-			⛔️ `search` requires a token to be present.
-			ℹ️ Provide your Bear API token via `Bear.token = "..."`
-			""")
-		}
-		
 		Bear().run(
 			action: Search(),
 			with: .init(
@@ -1257,7 +1242,8 @@ public extension Bear {
 		)
 	}
 	
-	/// Search all notes.
+	/// Search all notes. You need to have set `Bear.token` if you want to
+	/// receive search results.
 	/// - Parameters:
 	///   - query: The query to search for.
 	///   - tag: Any tag to filter search results.
