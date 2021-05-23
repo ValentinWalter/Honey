@@ -59,7 +59,7 @@ public extension Bear {
 	///   - handleSuccess: A closure called on success with the output of this action.
 	///   - handleError: A closure called on any error or cancelation.
 	static func create(
-        note: Note,
+        _ note: Note,
         tags: [Tag] = [],
         file: File? = nil,
         options: Options = [],
@@ -112,7 +112,7 @@ public extension Bear {
 		onSuccess handleSuccess: @escaping SuccessHandler<Create>
 	) {
 		Bear.create(
-			note: note,
+			note,
 			tags: tags,
 			file: file,
 			options: options,
