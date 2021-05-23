@@ -15,23 +15,9 @@ extension Bear {
     public typealias SuccessHandler<A> = Handler<A.Output> where A: Action
     public typealias Closure = () -> Void
 	
-    public struct Options: OptionSet {
-        public var rawValue: Int
-
-        public init(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-
-        public static let hideNote       = Options(rawValue: 1 << 0)
-        public static let newWindow      = Options(rawValue: 1 << 1)
-        public static let float          = Options(rawValue: 1 << 2)
-        public static let hideWindow     = Options(rawValue: 1 << 3)
-        public static let excludeTrashed = Options(rawValue: 1 << 4)
-        public static let pin            = Options(rawValue: 1 << 5)
-        public static let edit           = Options(rawValue: 1 << 6)
-		public static let timestamp      = Options(rawValue: 1 << 7)
-    }
-	
+	/// Used to assert `Bear.token` is not `nil`.
+	/// - Parameter action: The name of the action for logging purposes.
+	/// - Returns: The API token.
 	@discardableResult
 	fileprivate static func assertToken(in action: String) -> String {
 		guard let token = token else {
@@ -241,6 +227,42 @@ public extension Bear {
             }
         )
     }
+	
+	
+	//MARK:- Pin
+	
+	/// Pins a note. You need to have set `Bear.token` when using `Note.Lookup.selected`.
+	/// - Parameters:
+	///   - note: The note to pin.
+	///   - options: Various options to further customize Bear's specific
+	///              behavior during the opening of the note.
+	static func pin(
+		note: Note.Lookup,
+		options: Options = []
+	) {
+		if case .selected = note {
+			assertToken(in: "pin(note:)")
+		}
+		
+		Bear().run(
+			action: OpenNote(),
+			with: .init(
+				id: note.id,
+				title: note.title,
+				header: nil,
+				excludeTrashed: options.contains(.excludeTrashed),
+				newWindow: options.contains(.newWindow),
+				float: options.contains(.float),
+				showWindow: !options.contains(.hideWindow),
+				openNote: !options.contains(.hideNote),
+				selected: note.selected,
+				pin: true,
+				edit: options.contains(.edit),
+				token: token
+			),
+			then: nil
+		)
+	}
 	
 	
 	//MARK:- Open Tab
