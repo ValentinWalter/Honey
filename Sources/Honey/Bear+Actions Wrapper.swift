@@ -23,7 +23,8 @@ extension Bear {
 		guard let token = token else {
 			fatalError("""
 			⛔️ `\(action)` requires a token to be present.
-			ℹ️ Provide your Bear API token via `Bear.token = "..."`
+			ℹ️ Provide your Bear API token via `Bear.token = "..."` or \
+			preferably with an environment variable "BEAR_API_TOKEN"
 			""")
 		}
 		

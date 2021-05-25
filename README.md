@@ -147,7 +147,7 @@ Bear.add(
 ```swift
 let url = URL(string: "https://apod.nasa.gov/apod/image/2105/M8_rim2geminicrop600.jpg")!
 let data = Data(contentsOf: url)!
-let image = Bear.File(name: "Saturn", data: data)
+let image = Bear.File(name: "The Southern Cliff in the Lagoon", data: data)
 
 Bear.add(
     file: image,
