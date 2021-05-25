@@ -224,6 +224,32 @@ Bear.open(note: .home)
 Bear.read(note: .journal)
 ```
 
+#### Options
+The `Options` type is an `OptionSet`. This means you can mix and match any of the options.
+
+```swift
+// Don't show the note.
+static let hideNote
+// Open a new window.
+static let newWindow
+// Make the new window float (contingent on `newWindow`).
+static let float
+// Don't show Bear's window.
+static let hideWindow
+// Exclude notes in the trash from the action.
+static let excludeTrashed
+// Pin the note.
+static let pin
+// Place a cursor inside the note.
+static let edit
+// Append the current date and time at the end of the note.
+static let timestamp
+
+// Use like this
+Bear.open(..., options: .edit)
+Bear.create(..., options: [.pin, .newWindow])
+```
+
 #### Tag
 `Tag` behaves the same way a usual `String` does. Similar to `Note.Lookup` you can use this type to namespace your frequently used tags.
 
