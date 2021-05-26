@@ -7,6 +7,7 @@ Honey is based on [Middleman](https://github.com/ValentinWalter/Middleman/), a c
 - [Setup](#-setup)
     - [Installation](#installation)
     - [Configuration](#configuration)
+    - [Receiving urls](#receiving-urls)
 - [API](#-api)
     - [Actions](#-actions)
     - [Types](#-types)
@@ -83,6 +84,37 @@ let package = Package(
 Provide your API token if you plan on using any actions that require an API token. You do this directly by setting `Bear.token`. Or preferably with an environment variable called `BEAR_API_TOKEN`. In Xcode:
 ```
 Edit scheme… > Run > Arguments > Environment Variables
+```
+
+### Receiving urls
+As Honey is based on [Middleman](https://github.com/ValentinWalter/Middleman/#-setup), you will need to configure Middleman as well. To receive callbacks you need to make sure your app has a custom url scheme implemented. Middleman will then automatically read the first entry in the `CFBundleURLTypes` array in the main bundle's Info.plist.
+
+For Middleman to be able to parse incoming urls, you need to put one of the following methods in the delegate (UIKit/Cocoa) appropriate for your platform or in the `onOpenURL` SwiftUI modifier.
+
+```swift
+// SwiftUI
+// On any view (maybe in your `App`)
+.onOpenURL { url in
+    Middleman.receive(url)
+}
+
+// macOS
+// In your `NSAppDelegate`:
+func application(_ application: NSApplication, open urls: [URL]) {
+    Middleman.receive(urls)
+}
+
+// iOS 13 and up
+// In your `UISceneDelegate`:
+func scene(_ scene: UIScene, openURLContexts urlContexts: Set<UIOpenURLContext>) {
+    Middleman.receive(urlContexts)
+}
+
+// iOS 12 and below
+// In your `UIAppDelegate`:
+func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    Middleman.receive(url)
+}
 ```
 
 # 👾 API
