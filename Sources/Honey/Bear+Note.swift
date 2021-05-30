@@ -33,8 +33,8 @@ public extension Bear {
 		public init(
 			title: String,
 			body: String?,
-			tags: [Tag],
-			isPinned: Bool
+			tags: [Tag] = [],
+			isPinned: Bool = false
 		) {
             let now = Date()
 
