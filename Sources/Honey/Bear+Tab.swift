@@ -7,13 +7,15 @@
 
 import Foundation
 
-public enum Tab {
-	case all
-	case untagged
-	case todo
-	case today
-	case locked
-	case archive
-	case trash
-	case tag(String)
+extension Bear {
+	public enum Tab {
+		case all
+		case untagged
+		case todo
+		case today
+		case locked
+		case archive
+		case trash
+		case tag(String)
+	}
 }
